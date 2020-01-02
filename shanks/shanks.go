@@ -7,19 +7,19 @@ import (
 )
 
 type ShanksAlgorithm struct {
-	a, b 	group.GroupElement
-	g		group.Group
-	es		*group.ElementsSet
-	done	bool
-	x    	int64
+	a, b group.GroupElement
+	g    group.Group
+	es   *group.ElementsSet
+	done bool
+	x    int64
 }
 
 func NewShanksAlgorithm(a, b group.GroupElement, g group.Group) *ShanksAlgorithm {
 	return &ShanksAlgorithm{
-		a: a,
-		b: b,
-		g: g,
-		es: group.NewElementsSet(),
+		a:    a,
+		b:    b,
+		g:    g,
+		es:   group.NewElementsSet(),
 		done: false,
 	}
 }
@@ -55,7 +55,7 @@ func (sa *ShanksAlgorithm) Execute() (x int64, err error) {
 		t := sa.b.Add(sa.a.Pow(j))
 		//fmt.Println(t)
 		if i, ok := sa.es.Get(t); ok {
-			x = (m * i - j) % l
+			x = (m*i - j) % l
 			if sa.a.Pow(x).Equal(sa.b) {
 				found = true
 				break
@@ -72,5 +72,3 @@ func (sa *ShanksAlgorithm) Execute() (x int64, err error) {
 
 	return x, nil
 }
-
-

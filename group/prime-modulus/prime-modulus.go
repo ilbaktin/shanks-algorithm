@@ -7,13 +7,13 @@ import (
 )
 
 type PrimeModulusGroup struct {
-	modulus	int64
+	modulus  int64
 	hashFunc hash.Hash
 }
 
 func NewPrimeModulusGroup(modulus int64) *PrimeModulusGroup {
 	return &PrimeModulusGroup{
-		modulus: modulus,
+		modulus:  modulus,
 		hashFunc: sha256.New(),
 	}
 }
@@ -21,7 +21,7 @@ func NewPrimeModulusGroup(modulus int64) *PrimeModulusGroup {
 func (g *PrimeModulusGroup) GetElementWithValue(value int64) *PrimeModulusElement {
 	return &PrimeModulusElement{
 		value: value,
-		g: g,
+		g:     g,
 	}
 }
 
@@ -34,22 +34,21 @@ func (g *PrimeModulusGroup) GroupOrder() int64 {
 //}
 
 type PrimeModulusElement struct {
-	value	int64
-	g *PrimeModulusGroup
+	value int64
+	g     *PrimeModulusGroup
 }
-
 
 func (pme *PrimeModulusElement) Add(other group.GroupElement) group.GroupElement {
 	return &PrimeModulusElement{
 		value: (pme.value * other.(*PrimeModulusElement).value) % pme.g.modulus,
-		g: pme.g,
+		g:     pme.g,
 	}
 }
 
 func (pme *PrimeModulusElement) Sub(other group.GroupElement) group.GroupElement {
 	return &PrimeModulusElement{
 		value: (pme.value - other.(*PrimeModulusElement).value) % pme.g.modulus,
-		g: pme.g,
+		g:     pme.g,
 	}
 }
 
@@ -69,11 +68,10 @@ func (pme *PrimeModulusElement) Pow(power int64) group.GroupElement {
 	}
 	return &PrimeModulusElement{
 		value: result,
-		g: pme.g,
+		g:     pme.g,
 	}
 }
 
 func (pme *PrimeModulusElement) Hash() interface{} {
 	return pme.value
 }
-

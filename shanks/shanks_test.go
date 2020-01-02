@@ -8,15 +8,15 @@ import (
 )
 
 type testCase struct {
-	g group.Group
-	a, b group.GroupElement
+	g         group.Group
+	a, b      group.GroupElement
 	expectedX int64
 }
 
 func makePrimeModulusTestCase(modulus, aVal, bVal, expectedX int64) *testCase {
 	g := prime_modulus.NewPrimeModulusGroup(modulus)
 	return &testCase{
-		g:   g,
+		g:         g,
 		a:         g.GetElementWithValue(aVal),
 		b:         g.GetElementWithValue(bVal),
 		expectedX: expectedX,
@@ -31,7 +31,6 @@ func TestShanksAlgorithm_Execute(t *testing.T) {
 		makePrimeModulusTestCase(29, 5, 1, 0),
 		makePrimeModulusTestCase(29, 6, 1, 0),
 		makePrimeModulusTestCase(29, 7, 1, 0),
-
 	}
 	for _, tc := range cases {
 		algo := NewShanksAlgorithm(tc.a, tc.b, tc.g)
